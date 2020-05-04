@@ -3,7 +3,7 @@
 import numpy as np
 from scipy.signal import butter, lfilter, resample
 from scipy import stats
-
+lead_names = np.array(["I","II", "III", "aVR", "aVL", "aVF", "V1", "V2", "V3", "V4", "V5", "V6"])
 
 def get_slices(signal):
     signals = []
@@ -46,10 +46,10 @@ def get_features(classes,data, header_data):
     
     for i in range(n_leads):
         tmp = header_data[i + 1].split()
-        lead_name = tmp[-1]
+        lead_name = tmp[-1].replace("\n","")
         gain_mv = int(tmp[2].replace("/mV",""))
         lead = {}
-        lead["name"] = lead_name
+        lead["name"] = np.where(lead_names == lead_name)[0]
         lead["gain_mv"] = gain_mv
         lead["samples"] = data[i]
         data_dict["leads"].append(lead)
@@ -59,11 +59,12 @@ def get_features(classes,data, header_data):
             age = line.split(": ")[1]
             data_dict["age"] = int(age if not "NaN" in age else 57)
         elif "#Sex" in line:
-            data_dict["sex"] = line.split(": ")[1].replace("\n","")
+            data_dict["sex"] = 0 if line.split(": ")[1].replace("\n","") == "Male" else 1
         elif "#Dx" in line:
             data_dict["output"] = np.zeros((1,9))
             for c in line.split(": ")[1].replace("\n","").split(","):
                 data_dict["output"] += (classes == c)
+
         elif "#Rx" in line:
             data_dict["Rx"] = line.split(": ")[1].replace("\n","")
         elif "#Hx" in line:
@@ -77,6 +78,7 @@ def get_x(data_dict):
     filter_highcut = 15.0
     filter_order = 1
     signals = []
+    data_tags = []
     for lead in data_dict["leads"]:
       filtered = bandpass_filter(lead["samples"], lowcut=filter_lowcut, highcut=filter_highcut, signal_freq = data_dict["fs"], filter_order = filter_order)
       for s in get_slices(filtered):
@@ -85,5 +87,11 @@ def get_x(data_dict):
           signals.append(normalized)
         except:
           continue
-    x = np.asarray(signals)
-    return x
+        data_tags.append([data_dict["age"] if data_dict["age"] > 0 else 57 , data_dict["sex"], data_dict["Rx"], data_dict["Hx"], data_dict["Sx"], lead["name"]])
+    x = np.asarray(signals,dtype=np.float32)
+    x = np.reshape(x,(x.shape[0],x.shape[1],1))
+    tags = []
+    for tag in data_tags:
+        tags.append([tag[0],tag[1],tag[5]])
+    tags = np.asarray(tags,dtype=np.float32)
+    return x,tags

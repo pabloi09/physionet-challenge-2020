@@ -73,7 +73,7 @@ if __name__ == '__main__':
         os.mkdir(output_directory)
 
     classes = get_classes(input_directory, input_files)
-
+    classes = np.array(classes)
     # Load model.
     print('Loading 12ECG model...')
     model = load_12ECG_model()
@@ -81,14 +81,13 @@ if __name__ == '__main__':
     # Iterate over files.
     print('Extracting 12ECG features...')
     num_files = len(input_files)
-
+    results = np.asarray([[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]])
     for i, f in enumerate(input_files):
         print('    {}/{}...'.format(i+1, num_files))
         tmp_input_file = os.path.join(input_directory, f)
         data, header_data = load_challenge_data(tmp_input_file)
         current_label, current_score = run_12ECG_classifier(data, header_data, classes, model)
         # Save results.
-        
         save_challenge_predictions(output_directory, f, current_score, current_label, classes)
 
     print('Done.')
