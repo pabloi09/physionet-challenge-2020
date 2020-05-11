@@ -3,7 +3,9 @@ import os
 import sys
 from scipy.io import loadmat
 from run_12ECG_classifier import load_12ECG_model, run_12ECG_classifier
-
+import seaborn as sn
+import pandas as pd
+import matplotlib.pyplot as plt
 
 def load_challenge_data(filename):
 
@@ -54,14 +56,73 @@ def get_classes(input_directory, files):
 
     return sorted(classes)
 
+def confusion_matrixes(input_directory):
+    # Find files.
+    input_files = []
+    for f in os.listdir(input_directory):
+        if os.path.isfile(os.path.join(input_directory, f)) and not f.lower().startswith('.') and f.lower().endswith('mat'):
+            input_files.append(f)
+
+    if not os.path.isdir(output_directory):
+        os.mkdir(output_directory)
+
+    classes = get_classes(input_directory, input_files)
+    classes = np.array(classes)
+    print(classes)
+    # Load model.
+    print('Loading 12ECG model...')
+    model = load_12ECG_model()
+
+    # Iterate over files.
+    print('Extracting 12ECG features...')
+    num_files = len(input_files)
+    results = np.asarray([[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]])
+    confusion_matrix_labels = np.zeros((9,9))
+    confusion_matrix_scores = np.zeros((9,9))
+    bad = 0
+    good = 0
+    for i, f in enumerate(input_files):
+        print('    {}/{}...'.format(i+1, num_files))
+        tmp_input_file = os.path.join(input_directory, f)
+        data, header_data = load_challenge_data(tmp_input_file)
+        current_label, current_score, real_out = run_12ECG_classifier(data, header_data, classes, model)
+        confusion_matrix_labels[np.argmax(real_out)] += current_label
+        confusion_matrix_scores[np.argmax(real_out)] += current_score
+        if np.argmax(real_out) == np.argmax(current_label):
+            good += 1
+        else:
+            bad += 1
+        # Save results.
+    for i in range(confusion_matrix_labels.shape[0]):
+        confusion_matrix_labels[i] = confusion_matrix_labels[i] / np.sum(confusion_matrix_labels[i]) * 100
+    df_cm = pd.DataFrame(confusion_matrix_labels, index = [i for i in classes],
+                  columns =  [i for i in classes])
+    plt.figure(figsize = (9,9))
+    svm = sn.heatmap(df_cm, annot=True)
+    figure = svm.get_figure()    
+    figure.savefig('./cmatrix/labels/labels.png', dpi=400)
+
+    df_cm = pd.DataFrame(confusion_matrix_scores, index = [i for i in classes],
+                  columns =  [i for i in classes])
+    plt.figure(figsize = (9,9))
+    svm = sn.heatmap(df_cm, annot=True)
+    figure = svm.get_figure()    
+    figure.savefig('./cmatrix/scores/scores.png', dpi=400)
+    print("Accuracy: %0.4f" % ((good/(good+bad))))
+    print('Done.')
+
+
+
+
 
 if __name__ == '__main__':
     # Parse arguments.
     if len(sys.argv) != 3:
         raise Exception('Include the input and output directories as arguments, e.g., python driver.py input output.')
-
+    
     input_directory = sys.argv[1]
     output_directory = sys.argv[2]
+    #confusion_matrixes(input_directory)
 
     # Find files.
     input_files = []
@@ -74,6 +135,7 @@ if __name__ == '__main__':
 
     classes = get_classes(input_directory, input_files)
     classes = np.array(classes)
+    print(classes)
     # Load model.
     print('Loading 12ECG model...')
     model = load_12ECG_model()
@@ -81,7 +143,6 @@ if __name__ == '__main__':
     # Iterate over files.
     print('Extracting 12ECG features...')
     num_files = len(input_files)
-    results = np.asarray([[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]])
     for i, f in enumerate(input_files):
         print('    {}/{}...'.format(i+1, num_files))
         tmp_input_file = os.path.join(input_directory, f)
@@ -89,5 +150,4 @@ if __name__ == '__main__':
         current_label, current_score = run_12ECG_classifier(data, header_data, classes, model)
         # Save results.
         save_challenge_predictions(output_directory, f, current_score, current_label, classes)
-
     print('Done.')
