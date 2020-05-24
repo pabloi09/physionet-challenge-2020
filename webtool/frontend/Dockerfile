@@ -3,7 +3,7 @@ FROM python:3.6.9-slim
 WORKDIR /home/app
 COPY build ./build
 COPY ["*.py", "*.pem" ,"./" ]
-RUN pip install flask
+RUN pip install -r requirements.txt
 
 EXPOSE 5000
 

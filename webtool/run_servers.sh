@@ -1,5 +1,5 @@
 cd frontend
 npm run build
 cd ..
-docker-compose build
-docker-compose up
+sudo docker-compose build
+sudo docker-compose up
