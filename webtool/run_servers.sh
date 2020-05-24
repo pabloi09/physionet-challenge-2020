@@ -1,4 +1,5 @@
-cd apiserver; 
-flask run &
-cd ../frontend
-npm start 
+cd frontend
+npm run build
+cd ..
+docker-compose build
+docker-compose up

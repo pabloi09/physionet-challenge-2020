@@ -1,15 +1,13 @@
-FROM node:12.15.0-alpine
+FROM python:3.6.9-slim
 
-WORKDIR /home/node/app
-COPY ["package.json", "package-lock.json*","./" ]
-COPY src ./src
-COPY public ./public
-RUN npm install
-RUN npm run build
+WORKDIR /home/app
+COPY build ./build
+COPY ["*.py", "*.pem" ,"./" ]
+RUN pip install flask
 
 EXPOSE 5000
 
-CMD npx serve -s build
+CMD gunicorn --certfile=certificate.pem --keyfile=key.pem -b 0.0.0.0:5000 app:app
 
 
 
