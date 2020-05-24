@@ -1,0 +1,15 @@
+version: '3'
+
+services: 
+    frontend:
+        image: local/frontend:latest
+        build: 
+            context: ./frontend
+        ports: 
+            - 80:5000
+    apiserver:
+        image: local/apiserver:latest
+        build: 
+            context: ./apiserver
+        ports: 
+            - 5000:5000

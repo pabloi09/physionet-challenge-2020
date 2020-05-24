@@ -7,7 +7,8 @@ import json
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__, template_folder=".")
-UPLOAD_FOLDER = '/home/pablo/projects/physionet-challenge-2020/webtool/apiserver/tmp'
+#UPLOAD_FOLDER = '/home/pablo/projects/physionet-challenge-2020/webtool/apiserver/tmp'
+UPLOAD_FOLDER = '/home/app/tmp'
 ALLOWED_EXTENSIONS = {'mat', 'hea'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
@@ -63,4 +64,4 @@ def upload_file():
    return jsonify(response)
 		
 if __name__ == '__main__':
-   app.run(debug = True)
+   app.run(port=5000, debug=True, host='0.0.0.0')
