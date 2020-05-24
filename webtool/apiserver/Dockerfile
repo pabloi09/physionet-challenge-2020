@@ -3,6 +3,7 @@ FROM python:3.6.9-slim
 WORKDIR /home/app 
 
 COPY ["*.py", "requirements.txt", "*.pem" ,"./" ]
+RUN chmod 400 *.pem
 COPY tmp ./tmp
 COPY classifier ./classifier
 RUN pip install -r requirements.txt
