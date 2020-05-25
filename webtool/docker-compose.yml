@@ -35,7 +35,8 @@ services:
         networks:
           interna:
             ipv4_address: 10.0.1.2
-
+        extra_hosts: 
+            - "tfg-ecg.duckdns.org:127.0.0.1"
 networks:
   interna:
     driver: bridge
