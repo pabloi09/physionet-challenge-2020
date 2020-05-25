@@ -11,7 +11,7 @@ app = Flask(__name__, template_folder=".")
 UPLOAD_FOLDER = '/home/app/tmp'
 ALLOWED_EXTENSIONS = {'mat', 'hea'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-cors = CORS(app, resources={r"/*": {"origins": "http://www.tfg-ecg.duckdns.org"}})
+cors = CORS(app, resources={r"/*": {"origins": "https://www.tfg-ecg.duckdns.org"}})
 classifier = ClassifierInterface()
 app.secret_key = "super secret key"
 
