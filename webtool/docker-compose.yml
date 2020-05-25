@@ -31,9 +31,7 @@ services:
             - 443
             - 80
         volumes: 
-            - type: bind
-              source: /etc/letsencrypt
-              target: /etc/letsencrypt
+            - "/etc/letsencrypt:/etc/letsencrypt"
         networks:
           interna:
             ipv4_address: 10.0.1.2
