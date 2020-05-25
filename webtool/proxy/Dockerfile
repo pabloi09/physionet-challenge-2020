@@ -1,9 +1,9 @@
 FROM nginx:1.18.0-alpine
 
-WORKDIR /etc/nginx/sites-enabled
-RUN rm default
+RUN mkdir /etc/nginx/sites-available
+RUN mkdir /etc/nginx/sites-enabled
+
 WORKDIR /etc/nginx/sites-available
-RUN rm default
 COPY ["app.nginx","./" ]
 RUN ln -s /etc/nginx/sites-available/app.nginx /etc/nginx/sites-enabled/app.nginx
 
