@@ -26,7 +26,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 	
-@app.route('/', methods = ['POST','GET'])
+@app.route('/classifier', methods = ['POST','GET'])
 @cross_origin()
 def upload_file():
    response = {}

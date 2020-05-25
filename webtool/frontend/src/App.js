@@ -27,7 +27,7 @@ function App() {
       formData.append('file'+n, new Blob([file], { type: file.type }), file.name || 'file')
       n += 1
     })
-    var response = await fetch("http://www.tfg-ecg.duckdns.org:5000",{
+    var response = await fetch("http://www.tfg-ecg.duckdns.org/classifier",{
                       method:'POST',
                       body: formData,
                     })
