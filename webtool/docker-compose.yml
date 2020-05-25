@@ -31,7 +31,7 @@ services:
             - 443
             - 80
         volumes: 
-            - type: bin
+            - type: bind
               source: /etc/letsencrypt
               target: /etc/letsencrypt
         networks:
