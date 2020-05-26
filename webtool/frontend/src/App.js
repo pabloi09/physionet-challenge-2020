@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { AppBar, Toolbar, IconButton, Typography, Link } from "@material-ui/core"
 import UploadPage from "./UploadPage" 
 import DiagnosisPage from "./DiagnosisPage" 
 import {dark,light} from "./assets/themes"
-import Brightness4Icon from '@material-ui/icons/Brightness4';
+import LegendWrapper from "./LegendWrapper"
 
 function App() {
   const [files, setFiles] = useState([]);
   const [diagnosis, setDiagnosis] = useState({})
   const [darkTheme, setDarkTheme] = useState(false)
+
   const theme = createMuiTheme({
     background: 'linear-gradient(45deg, #2196f3 30%, rgb(175, 61, 228) 90%)',
     palette: {
@@ -39,24 +39,12 @@ function App() {
   }
   return (
     <ThemeProvider theme = {theme}>
-        <AppBar position="absolute" style={{backgroundColor:theme.appbar}}>
-          <Toolbar style={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-            <Typography variant="h6" >
-              <Link href="/" color="inherit" style={{textDecoration:"none"}}>
-                Diagnóstico de enfermedades cardiovasculares
-              </Link>
-              </Typography>
-            <IconButton
-                edge="end"
-                aria-label="darkmode"
-                aria-haspopup="true"
-                onClick={()=>setDarkTheme(!darkTheme)}
-                color="inherit">
-                <Brightness4Icon/>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        {diagnosis.leads ? <DiagnosisPage diagnosis={diagnosis}/>:<UploadPage setFiles={setFiles} filesUpload={filesUpload}/>}
+        <LegendWrapper setDarkTheme={setDarkTheme}
+                       darkTheme={darkTheme}/>
+        {diagnosis.leads ? 
+          <DiagnosisPage diagnosis={diagnosis}/>:
+          <UploadPage setFiles={setFiles} 
+                      filesUpload={filesUpload}/>}
     </ThemeProvider>
   );
 }
