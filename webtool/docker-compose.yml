@@ -26,8 +26,10 @@ services:
             context: ./proxy
         ports: 
             - 443:443
+            - 80:80
         expose:
             - 443
+            - 80
         volumes: 
             - "/etc/letsencrypt:/etc/letsencrypt"
         networks:
