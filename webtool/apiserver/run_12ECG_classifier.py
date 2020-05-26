@@ -19,7 +19,7 @@ def run_12ECG_classifier(data, header_data, classes, model):
     data_dict = get_features(classes, data, header_data)
     x, tags = get_x(data_dict)
     current_score = 1/2 * evaluate_with_t(x,tags,model["transformations2.0"]) + 1/2 * evaluate_with_gan(x,tags,model["gan2.0"])
-    
+    leads = get_for_web(data_dict)
     current_label = (current_score > 0.6) + np.zeros((9,))
 
     if(np.sum(current_label) == 0):
