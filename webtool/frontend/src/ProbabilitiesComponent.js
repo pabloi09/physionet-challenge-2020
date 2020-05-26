@@ -37,7 +37,7 @@ function ProbabilitiesComponent(props) {
                         tooltip={tooltip}
                         indexBy={"class"}/>
             </div>
-            <Typography style={{textAlign:"center"}}>Probabilidades de diagnóstico de cada enfermedad para el electrocardigrama solicitado</Typography>
+            <Typography style={{textAlign:"center"}}><i>Probabilidades de diagnóstico de cada enfermedad para el electrocardiograma solicitado</i></Typography>
         </div>
     );
 }

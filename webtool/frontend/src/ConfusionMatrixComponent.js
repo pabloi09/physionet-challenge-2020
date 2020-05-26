@@ -1,7 +1,6 @@
 import React from 'react';
 import { ResponsiveHeatMap } from '@nivo/heatmap'
 import { Typography } from '@material-ui/core';
-import disseases from "./assets/disseases"
 import { withTheme } from '@material-ui/core/styles';
 const tooltip = (info) =>{
     return(
@@ -9,7 +8,7 @@ const tooltip = (info) =>{
             <svg width="16" height="16" style={{marginRight:4}}>
                 <rect width="16" height="16" style={{fill: info["color"]}}/>
             </svg>
-            <Typography>{disseases[info["yKey"]]} - {disseases[info["xKey"]]} - <b> {info["value"]} %</b></Typography>
+            <Typography>{info["yKey"]} - {info["xKey"]} - <b> {info["value"]} %</b></Typography>
         </div>
     )
 }
@@ -59,7 +58,7 @@ function ConfusionMatrixComponent(props) {
                     cellHoverOthersOpacity={0.25}
                 />
             </div>
-            <Typography style={{textAlign:"center"}}>Enfermedad diagnosticada vs enfermedad real del paciente</Typography>
+            <Typography style={{textAlign:"center"}}><i>Enfermedad diagnosticada vs enfermedad real del paciente</i></Typography>
         </div>
     );
 }

@@ -68,7 +68,7 @@ function LeadComponent(props) {
                             onClick={clickHandler}
                             useMesh />
                     </div>
-                    <Typography>Tiempo en segundos</Typography>
+                    <Typography><i>Tiempo en segundos</i></Typography>
                 </div>
             </ExpansionPanelDetails>
         </ExpansionPanel>

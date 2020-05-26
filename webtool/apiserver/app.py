@@ -47,16 +47,15 @@ def upload_file():
        f2.save(filepath2)
        
        if ".mat" in filepath1:
-           current_label, current_score, real_out, leads, classes,fs = classifier.predict(filepath1)
+           current_label, current_score, leads, classes,fs = classifier.predict(filepath1)
        else:
-           current_label, current_score, real_out, leads, classes,fs = classifier.predict(filepath2)
+           current_label, current_score, leads, classes,fs = classifier.predict(filepath2)
        
        os.remove(filepath2)
        os.remove(filepath1)
        
        response["leads"] = leads
        response["classes"] = classes.tolist()
-       response["real_out"] = real_out.tolist()
        response["labels"] = current_label.tolist()
        response["score"] = current_score.tolist()
        response["fs"] = fs

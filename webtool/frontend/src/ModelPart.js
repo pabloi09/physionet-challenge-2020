@@ -3,7 +3,7 @@ import ProbabilitiesComponent from "./ProbabilitiesComponent"
 import { Typography } from '@material-ui/core';
 import {Paper} from "@material-ui/core"
 import ConfusionMatrixComponent from "./ConfusionMatrixComponent"
-
+import disseases from "./assets/disseases"
 function ModelPart(props) {
 
     
@@ -11,10 +11,10 @@ function ModelPart(props) {
         <Paper style={{borderRadius:"10px", paddingTop:"10px", paddingBottom:"10px", height:"100%"}}>
             <Typography variant="h3" style={{margin:"10px"}}>Diagnóstico</Typography>
             <Typography style={{margin:"10px"}}>
-                El modelo calcula como mas probable que el electrocardiograma pertenzca a una
+                El modelo calcula como más probable que el electrocardiograma pertenezca a una
                 persona con <b>{props.diagnosis.classes
                             .filter((c,i)=>props.diagnosis.labels[i] === 1)
-                            .reduce((acc="" ,val)=>(acc + val + " y ") )}</b>
+                            .reduce((acc="" ,val)=>(acc + disseases[val] + " y ") )}</b>
             </Typography>
             <ProbabilitiesComponent diagnosis={props.diagnosis}/>
             <Typography style={{margin:"10px"}}>

@@ -19,8 +19,8 @@ function LeadsPart(props) {
                 Sobre una derivación
             </Typography>
             <ul>
-                    <li><Typography>Ctrl+click para hacer zoom in</Typography></li>
-                    <li><Typography>Ctrl+Mayús+click para hacer zoom out</Typography></li>
+                    <li><Typography>Ctrl + Click para hacer zoom in</Typography></li>
+                    <li><Typography>Ctrl + Mayús + Click para hacer zoom out</Typography></li>
                 </ul>
             {
                 props.diagnosis.leads.map((lead)=>{

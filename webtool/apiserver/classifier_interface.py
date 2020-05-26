@@ -19,7 +19,7 @@ class ClassifierInterface(metaclass=Singleton):
 
     def predict(self,file_path):
         data, header_data = load_challenge_data(file_path)
-        current_label,current_score,real_out,leads,fs = run_12ECG_classifier(data, header_data, self.classes, self.model)
+        current_label,current_score,leads,fs = run_12ECG_classifier(data, header_data, self.classes, self.model)
         
-        return current_label, current_score, real_out, leads, self.classes,fs
+        return current_label, current_score, leads, self.classes,fs
 

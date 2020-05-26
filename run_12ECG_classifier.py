@@ -18,10 +18,8 @@ batch_norm = 0.8
 def run_12ECG_classifier(data, header_data, classes, model):
     data_dict = get_features(classes, data, header_data)
     x, tags = get_x(data_dict)
-    #current_score = 1/2 * evaluate_with_t(x,tags,model["transformations"]) + 1/4 * evaluate_with_gan(x,tags,model["gan"]) + 1/4 * evaluate_with_hybrid(x,tags,model["hybrid"])
     current_score = 1/2 * evaluate_with_t(x,tags,model["transformations2.0"]) + 1/2 * evaluate_with_gan(x,tags,model["gan2.0"])
     
-    #current_score = filters_total(current_score)
     current_label = (current_score > 0.6) + np.zeros((9,))
 
     if(np.sum(current_label) == 0):
@@ -30,8 +28,7 @@ def run_12ECG_classifier(data, header_data, classes, model):
 
     if math.isnan(current_label[0]):
          current_label = np.zeros((9,))
-    
-    #return current_label,current_score
+    #return current_label,current_score,leads, data_dict["fs"]
     return current_label, current_score, data_dict["output"]
 
 def evaluate_with_t(x,tags,model):
@@ -41,8 +38,7 @@ def evaluate_with_t(x,tags,model):
         argmax = y[i][argsmax[0]]
         y[i] = ((y[i] == argmax) + np.zeros((9,)))
     current_score = np.sum(y, axis= 0) / y.shape[0]
-    #current_score = filters_t(current_score)
-    current_score = filters_p_t(current_score)
+    current_score = filters_t(current_score)
     return current_score
 
 def evaluate_with_gan(x,tags,model):
@@ -52,18 +48,6 @@ def evaluate_with_gan(x,tags,model):
         argmax = y[i][argsmax[0]]
         y[i] = ((y[i] == argmax) + np.zeros((9,)))
     current_score = np.sum(y, axis= 0) / y.shape[0]
-    #current_score = filters_gan(current_score)
-    current_score = filters_p_g(current_score)
-    return current_score
-
-def evaluate_with_hybrid(x,tags,model):
-    y = model.predict([x,tags])
-    for i in range(y.shape[0]):
-        argsmax = np.argsort(-y[i])
-        argmax = y[i][argsmax[0]]
-        y[i] = ((y[i] == argmax) + np.zeros((9,)))
-    current_score = np.sum(y, axis= 0) / y.shape[0]
-    current_score = filters_hybrid(current_score)
     return current_score
 
 def filters_total(array):
@@ -74,35 +58,7 @@ def filters_total(array):
 
 def filters_t(array):
     argsmax = np.argsort(-array)
-    array = filter(argsmax,array,[6,1])
-    array = filter(argsmax,array,[6,4])
-    array = filter(argsmax,array,[6,7])
-    array = filter(argsmax,array,[6,8,3,8])
-    return array
-
-def filters_p_t(array):
-    argsmax = np.argsort(-array)
     array = filter(argsmax, array, [3,4])
-    return array
-
-def filters_p_g(array):
-    argsmax = np.argsort(-array)
-    #array = filter(argsmax, array, [3,4])
-    return array
-
-def filters_gan(array):
-    argsmax = np.argsort(-array)
-    array = filter(argsmax,array,[6,4])
-    array = filter(argsmax,array,[6,7])
-    array = filter(argsmax,array,[6,8,3,8])
-    return array
-
-def filters_hybrid(array):
-    argsmax = np.argsort(-array)
-    array = filter(argsmax,array,[6,1])
-    array = filter(argsmax,array,[6,4])
-    array = filter(argsmax,array,[6,7,5,7,3,7])
-    array = filter(argsmax,array,[6,8])
     return array
 
 def filter(argsmax,array,changes=[]):
@@ -112,8 +68,6 @@ def filter(argsmax,array,changes=[]):
             array[argsmax[0]] = array[argsmax[1]]
             array[argsmax[1]] = tmp 
     return array
-
-
 
 def load_12ECG_model():
     model = {}
@@ -197,8 +151,4 @@ def prep_classifier():
 
     classifier = Model([signal,qualdata],out)
 
-
-    model.summary()
-    qdata.summary()
-    join.summary()
     return classifier

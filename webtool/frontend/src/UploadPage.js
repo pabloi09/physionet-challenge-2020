@@ -28,7 +28,7 @@ function UploadPage(props) {
       <Container style={{padding:"100px", backgroundColor:props.theme.palette.background.default, height:"100vh"}} maxWidth="xl">
         <Paper  style={{borderRadius:"10px", padding:"20px", display:"flex", flexDirection:"column", alignItems:"center",height:"100%", justifyContent:"space-between"}}>
               <Typography variant="h3" color = "textPrimary">
-                Arrastre los ficheros del electrocardigrama para iniciar el diagnóstico
+                Arrastre los ficheros del electrocardiograma para iniciar el diagnóstico
               </Typography>
               <FilesComponent 
                 setCount={setCount}
