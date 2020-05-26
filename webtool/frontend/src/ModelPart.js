@@ -13,8 +13,9 @@ function ModelPart(props) {
             <Typography style={{margin:"10px"}}>
                 El modelo calcula como más probable que el electrocardiograma pertenezca a una
                 persona con <b>{props.diagnosis.classes
+                            .map((val)=>disseases[val])
                             .filter((c,i)=>props.diagnosis.labels[i] === 1)
-                            .reduce((acc="" ,val)=>(acc + disseases[val] + " y ") )}</b>
+                            .reduce((acc="" ,val)=>(acc + val + " y ") )}</b>
             </Typography>
             <ProbabilitiesComponent diagnosis={props.diagnosis}/>
             <Typography style={{margin:"10px"}}>
