@@ -8,7 +8,7 @@ from tensorflow.keras.layers import Bidirectional, Conv1D
 from tensorflow.keras.layers import MaxPooling1D, Embedding, Concatenate
 from tensorflow.keras.optimizers import Adam, RMSprop
 import tensorflow as tf
-from get_12ECG_features import get_features, get_x 
+from get_12ECG_features import get_features, get_x, get_for_web
 import os
 import math
 
