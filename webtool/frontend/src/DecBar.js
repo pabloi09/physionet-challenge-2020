@@ -1,7 +1,7 @@
 import React from 'react';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { AppBar, Toolbar, IconButton, Typography, Link, Tooltip, Dialog, ListItem, List } from "@material-ui/core"
+import { AppBar, Toolbar, IconButton, Typography, Link, Tooltip} from "@material-ui/core"
 import { makeStyles } from '@material-ui/core/styles';
 import { withTheme } from '@material-ui/core/styles';
 

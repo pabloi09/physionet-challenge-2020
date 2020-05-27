@@ -4,6 +4,7 @@ import UploadPage from "./UploadPage"
 import DiagnosisPage from "./DiagnosisPage" 
 import {dark,light} from "./assets/themes"
 import LegendWrapper from "./LegendWrapper"
+import heatmap from "./assets/heatmap"
 
 function App() {
   const [files, setFiles] = useState([]);
@@ -32,9 +33,7 @@ function App() {
                       body: formData,
                     })
     response = await response.json()
-    var resp = await fetch("assets/heatmap.json")
-    resp = await resp.json()
-    response.heatmap = resp
+    response.heatmap = heatmap
     setDiagnosis(response)
   }
   return (

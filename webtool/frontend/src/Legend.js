@@ -9,7 +9,7 @@ function Legend(props) {
             {
               Object.keys(disseases)
               .map((key)=>(
-                <ListItem>
+                <ListItem key={key}> 
                   <Typography><b>{key}</b> - {disseases[key]}</Typography>
                 </ListItem>
               ))
