@@ -8,7 +8,7 @@ const colors = ["hsl(305, 70%, 50%)","hsl(128, 70%, 50%)","hsl(78, 70%, 50%)","h
 const tooltip = (info) =>{
     return(
         <div style={{display:"flex", flexDirection:"row", alignItems:"center"}}>
-            <svg width="16" height="16" style={{marginRight:4}}>
+            <svg width="16" height="16" style={{marginRight:4}} xmlns="https://www.w3.org/2000/svg">
                 <rect width="16" height="16" style={{fill: info["color"]}}/>
             </svg>
             <Typography>{disseases[info["indexValue"]]} - <b> {info["value"]} %</b></Typography>

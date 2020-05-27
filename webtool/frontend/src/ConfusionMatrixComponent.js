@@ -5,7 +5,7 @@ import { withTheme } from '@material-ui/core/styles';
 const tooltip = (info) =>{
     return(
         <div style={{display:"flex", flexDirection:"row", alignItems:"center"}}>
-            <svg width="16" height="16" style={{marginRight:4}}>
+            <svg width="16" height="16" style={{marginRight:4}} xmlns="https://www.w3.org/2000/svg">
                 <rect width="16" height="16" style={{fill: info["color"]}}/>
             </svg>
             <Typography>{info["yKey"]} - {info["xKey"]} - <b> {info["value"]} %</b></Typography>
