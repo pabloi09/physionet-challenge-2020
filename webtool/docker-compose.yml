@@ -17,8 +17,6 @@ services:
             context: ./apiserver
         ports: 
             - 3000:3000
-        volumes: 
-            - "/etc/letsencrypt/certs:/home/app/certs"
         networks:
             interna:
               ipv4_address: 10.0.1.4
