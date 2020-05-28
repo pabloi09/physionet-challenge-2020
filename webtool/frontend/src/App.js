@@ -31,11 +31,12 @@ function App() {
     var response = await fetch("https://www.tfg-ecg.duckdns.org/classifier",{
                       method:'POST',
                       body: formData,
+                      mode: "cors"
                     })
-    console.log("Respondido")
-    //response = await response.json()
-    //response.heatmap = heatmap
-    //setDiagnosis(response)
+    response = await response.json()
+    response.heatmap = heatmap
+    setDiagnosis(response)
+    
   }
   return (
     <ThemeProvider theme = {theme}>
