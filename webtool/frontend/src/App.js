@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import UploadPage from "./UploadPage" 
-//import DiagnosisPage from "./DiagnosisPage" 
+import DiagnosisPage from "./DiagnosisPage" 
 import {dark,light} from "./assets/themes"
 import LegendWrapper from "./LegendWrapper"
 import heatmap from "./assets/heatmap"
