@@ -28,8 +28,8 @@ function App() {
       formData.append('file'+n, new Blob([file], { type: file.type }), file.name || 'file')
       n += 1
     })
-    fetch("https://www.tfg-ecg.duckdns.org/classifier",
-          { method:'POST', body: formData})
+    fetch("https://tfg-ecg.duckdns.org/classifier",
+          { method:'POST', body: formData, mode: "cors"})
           .then((response)=>response.json())
           .then((json)=>{
                       json.heatmap = heatmap
