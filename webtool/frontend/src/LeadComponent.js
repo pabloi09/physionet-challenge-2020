@@ -55,7 +55,10 @@ function LeadComponent(props) {
                             animate
                             theme={props.theme.nivo}
                             width={width}
-                            data={[{"id":props.name, "color": "hsl(0, 100%, 50%)", "data": props.signal.map((value,index)=>{return {"x":index/props.fs, "y":value}})}]}
+                            data={[{"id":props.name, 
+                                    "color": "hsl(0, 100%, 50%)", 
+                                    "data": props.signal.map((value,index)=>{
+                                                                return {"x":index/props.fs, "y":value}})}]}
                             enablePoints={false}
                             margin={{ top: 60, right: 80, bottom: 60, left: 80 }}
                             xScale={{ type: 'linear' }}
