@@ -29,7 +29,7 @@ function App() {
       n += 1
     })
     var response = await fetch("https://www.tfg-ecg.duckdns.org/classifier",{
-                      method:'PUT',
+                      method:'POST',
                       body: formData,
                     })
     response = await response.json()
