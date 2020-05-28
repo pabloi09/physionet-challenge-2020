@@ -20,7 +20,7 @@ function App() {
     appbar:darkTheme ? "#424242":"#3f51b5"
   });
 
-  const filesUpload = async () => {
+  const filesUpload = () => {
     const formData = new FormData()
     var n = 1
     Object.keys(files).forEach((key) => {
@@ -28,15 +28,15 @@ function App() {
       formData.append('file'+n, new Blob([file], { type: file.type }), file.name || 'file')
       n += 1
     })
-    var response = await fetch("https://www.tfg-ecg.duckdns.org/classifier",{
+    fetch("https://www.tfg-ecg.duckdns.org/classifier",{
                       method:'POST',
                       body: formData,
                       mode: "cors"
+                    }).then((response)=>response.json())
+                    .then((json)=>{
+                      json.heatmap = heatmap
+                      setDiagnosis(json)
                     })
-    response = await response.json()
-    response.heatmap = heatmap
-    setDiagnosis(response)
-
   }
   return (
     <ThemeProvider theme = {theme}>
