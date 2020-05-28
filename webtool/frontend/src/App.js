@@ -36,7 +36,7 @@ function App() {
     response = await response.json()
     response.heatmap = heatmap
     setDiagnosis(response)
-    
+
   }
   return (
     <ThemeProvider theme = {theme}>
