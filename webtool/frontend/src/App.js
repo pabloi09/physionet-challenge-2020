@@ -29,7 +29,7 @@ function App() {
       n += 1
     })
     fetch("https://www.tfg-ecg.duckdns.org/classifier",
-          { method:'POST', body: formData, mode: "cors"})
+          { method:'POST', body: formData})
           .then((response)=>response.json())
           .then((json)=>{
                       json.heatmap = heatmap
