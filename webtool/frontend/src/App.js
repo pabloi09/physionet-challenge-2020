@@ -32,16 +32,17 @@ function App() {
                       method:'POST',
                       body: formData,
                     })
-    response = await response.json()
-    response.heatmap = heatmap
-    setDiagnosis(response)
+    console.log("Respondido")
+    //response = await response.json()
+    //response.heatmap = heatmap
+    //setDiagnosis(response)
   }
   return (
     <ThemeProvider theme = {theme}>
         <LegendWrapper setDarkTheme={setDarkTheme}
                        darkTheme={darkTheme}/>
         {diagnosis.leads ? 
-          <p>Recibido</p>:
+          <DiagnosisPage diagnosis={diagnosis}/>:
           <UploadPage setFiles={setFiles} 
                       filesUpload={filesUpload}/>}
     </ThemeProvider>
