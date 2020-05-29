@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Diagnóstico ECG",
+  "name": "Ayuda al diagnóstico de ECG",
   "icons": [
     {
       "src": "favicon.ico",
