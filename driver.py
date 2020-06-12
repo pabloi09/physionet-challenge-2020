@@ -124,7 +124,7 @@ def confusion_matrixes(input_directory):
     plt.figure(figsize = (9,9))
     svm = sn.heatmap(df_cm, annot=True)
     figure = svm.get_figure()    
-    figure.savefig('./cmatrix/labels/labels.png', dpi=400)
+    figure.savefig('./cmatrix/labels/with_t.eps')
 
     df_cm = pd.DataFrame(confusion_matrix_scores, index = [i for i in classes],
                   columns =  [i for i in classes])
